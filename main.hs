@@ -91,3 +91,84 @@ vor (x:xs) = x ||| vor xs
 vcurry f x y = f (x,y)
 
 vuncurry f (x,y) = f x y
+
+vabsIf x = if x < 0 then -x else x
+
+vsigNum x 
+  | x < 0 = -1
+  | x == 0 = 0
+  | otherwise = 1
+
+vsigNum2 0 = 0
+vsigNum2 x
+  | x < 0 = -1
+  | otherwise = 1
+
+vnotPM True = False 
+vnotPM False = True
+
+vmax x y
+  | x >= y = x
+  | otherwise = y
+
+vmin x y 
+  | x <= y = x
+  | otherwise = y
+
+veven n = mod n 2 == 0
+
+vodd n = mod n 2 /= 0
+vodd2 n = vnotPM (veven n)
+
+pot n x = x ^ n
+
+cuadrado = pot 2
+cubo = pot 3
+cuarta = pot 4
+
+vproduct [] = 1
+vproduct (x:xs) = x * vproduct xs
+
+vhead (x:_) = x
+
+vtail (_:xs) = xs
+
+vlast [x] = x
+vlast (_:xs) = vlast xs
+
+vinit [_] = []
+vinit (x:xs) = x : vinit xs
+
+(+++) :: [a] -> [a] -> [a]
+[] +++ ys = ys
+(x:xs) +++ ys = x : (xs +++ ys)
+
+vreverse [] = []
+vreverse (x:xs) = vreverse xs +++ [x]
+
+vconcat [] = []
+vconcat (xs:xss) = xs +++ vconcat xss
+
+vtake n _ | n <= 0 = []
+vtake _ [] = []
+vtake n (x:xs) = x : vtake (n - 1) xs
+
+vdrop n xs | n <= 0 = xs
+vdrop _ [] = []
+vdrop n (_:xs) vdrop (n - 1) xs
+
+vreplicate n x
+  | n <= 0 = []
+  | otherwise = x : vreplicate (n - 1) x
+
+revers n = reversa2 n 0
+
+reversa2 n x 
+  | n < 10    = n + (x * 10)
+  | otherwise = reversa2 (div n 10) ((mod n 10) + (x * 10))
+
+esCapicua n = n == revers n
+
+esBisiesto a = mod a 4 == 0 && (mod a 100 /= 0 || mod a 400 == 0)
+
+
