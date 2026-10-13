@@ -155,7 +155,7 @@ vtake n (x:xs) = x : vtake (n - 1) xs
 
 vdrop n xs | n <= 0 = xs
 vdrop _ [] = []
-vdrop n (_:xs) vdrop (n - 1) xs
+vdrop n (_:xs) = vdrop (n - 1) xs
 
 vreplicate n x
   | n <= 0 = []
@@ -171,4 +171,5 @@ esCapicua n = n == revers n
 
 esBisiesto a = mod a 4 == 0 && (mod a 100 /= 0 || mod a 400 == 0)
 
-
+-- listaBisiesto n = filter esBisiesto [n..]
+listaBisiesto n = [x|x <- [n..], esBisiesto x]
