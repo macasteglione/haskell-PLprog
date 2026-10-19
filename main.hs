@@ -164,12 +164,23 @@ vreplicate n x
 revers n = reversa2 n 0
 
 reversa2 n x 
-  | n < 10    = n + (x * 10)
+  | n < 10 = n + (x * 10)
   | otherwise = reversa2 (div n 10) ((mod n 10) + (x * 10))
 
 esCapicua n = n == revers n
 
 esBisiesto a = mod a 4 == 0 && (mod a 100 /= 0 || mod a 400 == 0)
 
--- listaBisiesto n = filter esBisiesto [n..]
-listaBisiesto n = [x|x <- [n..], esBisiesto x]
+listaBisiesto n = [x | x <- [n..], esBisiesto x]
+
+ordenarCon _ [] = []
+ordenarCon f (x:xs) = pre ++ [x] ++ pos 
+  where pre = ordenarCon f $ [e | e <- xs, f e x]
+        pos = ordenarCon f $ [e | e <- xs, vnot (f e x)]
+
+filterCool p xs = ([k | k <- xs, p k], [k | k <- xs, not (p k)])
+filterCool2 _ [] = ([],[])
+filterCool2 p (x:xs) 
+  | p x = ()
+
+filterCool3 p = foldr (if p x then (x: si, no) else ()) ([],[])
